@@ -1,6 +1,8 @@
 /*
 Search Program
 Made by Tiago Garcia
+
+Tried to make it work without giving directory but what I did doesn't work
 */
 
 #include <stdio.h>
@@ -14,8 +16,8 @@ Made by Tiago Garcia
 void print_usage() {
     printf("Usage: search [options] [directory]\n");
     printf("Options:\n");
-    printf("  -S                List all files with size, permissions, and last access time\n");
-    printf("  -s <size>        List files with size less than or equal to specified size\n");
+    printf("  -S                    List all files with size, permissions, and last access time\n");
+    printf("  -s <size>             List files with size less than or equal to specified size\n");
     printf("  -f <pattern> <depth>  List files matching pattern within specified depth\n");
     printf("If no directory is specified, the current directory is used.\n");
 }
@@ -41,7 +43,6 @@ void list_files_with_details(const char *directory) {
     // This function should implement the logic to list files with size, permissions, and last access time.
     // For now, we will just print a placeholder message.
     printf("Listing files in directory: %s\n", directory);
-    // TODO: Implement actual file listing logic
     DIR *dir = opendir(directory);
     if( (dir = opendir(directory)) == NULL) {
         perror("opendir");
@@ -133,10 +134,12 @@ int main(int argc, char *argv[]) {
             }else {
                 list_files_with_details(argv[++i]);
             }
-        } else if (strcmp(argv[i], "-s") == 0 && i + 1 < argc) {
+        } else if (strcmp(argv[i], "-s") == 0) {
             // Handle -s option
             if(argv[++i] == NULL || argv[++i][0] == '-') {
                 // No size specified, print usage
+                printf("No Size Specified!");
+                printf("\n");
                 print_usage();
                 return 1;
             }
@@ -144,10 +147,20 @@ int main(int argc, char *argv[]) {
             printf("Listing files with size less than or equal to: %ld\n", size_limit);
             list_files_with_size(argv[1], size_limit);
             i++;
-        } else if (strcmp(argv[i], "-f") == 0 && i + 2 < argc) {
+        } else if (strcmp(argv[i], "-f") == 0) {
             // Handle -f option
             if(argv[++i] == NULL || argv[++i][0] == '-') {
                 // No pattern specified, print usage
+                printf("no Pattern Specified!\n");
+                printf("\n");
+                print_usage();
+                return 1;
+            }
+            int n = i + 2;
+            if(argv[n] == NULL || argv[n][0] == '-'){
+                // No depth specified, print usage
+                printf("No Depth Specified!\n");
+                printf("\n");
                 print_usage();
                 return 1;
             }
