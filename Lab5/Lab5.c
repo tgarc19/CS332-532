@@ -3,6 +3,8 @@
 #include <string.h>
 #include <unistd.h>
 #include <dirent.h>
+
+//unnecessary for current iteration
 #include <sys/types.h>
 
 int main (int argc, char **argv) { 
